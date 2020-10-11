@@ -27,19 +27,14 @@ class Credential:
             else:
                 print("You did not make an acceptable choice")
 
-    def username(self):
-        print("please enter your credential user name")
-        user = input()
-        return user
-
     @classmethod
     def display_credentials(self):
-        if Credential.credentials_list:
+        if len(Credential.credentials_list) > 0:
             for cred in Credential.credentials_list:
                 print("/n")
-                print(f"For {cred.name} your username is: {cred.username}")  # and your password is: {cred.password}
+                print(f"For {cred.name} your username is: {cred.username}  and your password is: {cred.password}")
         else:
-            "You have no credentials yet"
+            print("You have no credentials yet")
 
     @classmethod
     def delete_credential(self, name):
@@ -58,5 +53,6 @@ class Credential:
 
 
 if __name__ == '__main__':
-    print("hi")
+    pass
+
 
