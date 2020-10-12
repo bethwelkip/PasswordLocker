@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 import unittest
+from user import User
+from credentials import Credential
 
 class ContactTest(unittest.TestCase):
     '''
@@ -9,13 +11,14 @@ class ContactTest(unittest.TestCase):
            unittest.TestCase: TestCase class that helps in creating test cases
 
      '''
+
     def setUp(self):
         '''
 
 
         :return:
         '''
-        pass
+        self.user_one = User("Bethu", "Kip")
 
     def tearDown(self):
         '''
