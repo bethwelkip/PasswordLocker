@@ -7,11 +7,22 @@ class User:
     users = []
 
     def __init__(self, username, password):
+        '''
+        Initializes the user class with a username and password
+        :param username:
+        :param password:
+        '''
         self.username = username
         self.password = password
 
     @classmethod
     def login(cls):
+        '''
+        Method logs a user in if they provide the correct username and password combination
+        Args:
+            class
+        :return:
+        '''
         name = input("provide the username of your account")
         if User.users:
             for user in User.users:
@@ -36,10 +47,20 @@ class User:
             print("No users currently saved in the system")
 
     def save_user(self):
+        '''
+        saves the user object into a list available to entire class.
+        :return:
+        '''
         User.users.append(self)
 
     @classmethod
     def create_user(cls):
+        '''
+        Creates a user account once provided with username and password
+        Args:
+            class
+        :return:
+        '''
         print("please provide a username for your account")
         username = input()
         password = input("please the password you'd like for your account\n")
@@ -48,6 +69,11 @@ class User:
         return user
 
     def add_credential(self):
+        '''
+
+        :return:
+        '''
+
         print("Please provide me with the name of the credential you would like to add  eg Twitter, Instagram \n")
         name = input()
         username = input("please provide your username as on the credential\n")
@@ -57,28 +83,68 @@ class User:
         print("Length of list:  ", len(Credential.credentials_list))
 
     def create_credential(self):
-        print("Please provide me with the name of the credential you would like to create  eg Twitter, Instagram \n")
-        name = input()
-        username = input("please provide the username you would like to have on the credential \n")
-        password = Credential.password(name)
+        '''
+
+
+        :return:
+        '''
+        # print("Please provide me with the name of the credential you would like to create  eg Twitter, Instagram \n")
+        name = self.userInput("create_cred_name") # input()
+        username = self.userInput("create_cred_user") # input("please provide the username you would like to have on the
+        # credential
+        # \n")
+        password = Credential.passworded(Credential("", "", "'"))
         new_cred = Credential(name, username, password)
         new_cred.save_credential()
 
         print("Length of list:  ", len(Credential.credentials_list))
 
     def display_creds(self):
+        '''
+
+
+        :return:
+        '''
         Credential.display_credentials()
 
     def delete_credential(self):
-        name = input("name of credential to be deleted? \n")
+        '''
+
+
+        :return:
+        '''
+        name = self.userInput("delete") # input("name of credential to be deleted? \n")
         Credential.delete_credential(name)
         print("Length of list:  ", len(Credential.credentials_list))
+        pass
+    def userInput(self, caller):
+        if caller == "delete":
+            name = input("name of credential to be deleted? \n")
+            return name
+
+        elif caller == "create_cred_user":
+            name = input("please provide the username you would like to have on the credential \n")
+            return name
+        elif caller == "create_cred_name":
+            option = input("Please provide me with the name of the credential you would like to create  eg Twitter, "
+                         "Instagram \n")
+            return option
+        elif caller == "add":
+            pass
+        elif caller == "create_user":
+            pass
+        elif caller == "login_user":
+            pass
+        else:
+            pass
+
 
 
 if __name__ == '__main__':
+
     print("Welcome to Password Locker")
     state = True
-    #new_user = ""
+    # new_user = ""
     while state:
         print("type the following shortcode to choose the action you'd like to do: \n cc:   create user account \n "
                   "lc:  log into existing user account \n ctc:  create credential \n ad:    add credential \n "
