@@ -1,4 +1,4 @@
-# PasswordLocker
+# PasswordLocker by Bethwel Kiplimm
 
 ## Description
 Allows the user to create a user account and create their credentials and save them
