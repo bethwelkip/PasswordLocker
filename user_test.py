@@ -5,7 +5,7 @@ from user import User
 from credentials import Credential
 from unittest.mock import patch
 
-class ContactTest(unittest.TestCase):
+class userTest(unittest.TestCase):
     '''
        defines test cases for the user class behaviors
        Args:
@@ -44,20 +44,19 @@ class ContactTest(unittest.TestCase):
         self.assertEqual(self.cred_one.username, "bethu")
 
 
-    def test_create_credential(self):
+    def test_login(self):
         '''
 
-
+        tests the login method of the user class. users 'patch' and  'builtins' to simulate user input
         :return:
 
         '''
-
-        input_one = builtins.input("beth")
-        input_two = builtins.input("beth")
-        input_three = builtins.input("y")
-        input_three = builtins.input("beth")
-        user_input = ["beth","beth", "y", "beth"]
-
+        User.users.append(self.user_one)
+        user_input = ["Bethu","Kip"]
+        with patch('builtins.input', side_effect = user_input):
+            new_user = User.login()
+        print(new_user.password)
+        self.assertEqual(self.user_one,new_user ) #passed!!!!!
     def test_add_credential(self):
         '''
 
@@ -76,14 +75,21 @@ class ContactTest(unittest.TestCase):
         '''
         pass
 
-    def test_login(self):
+    def test_create_credential(self):
         '''
-
+        tests the create_credential method of User class.
 
         :return:
 
         '''
-        pass
+        self.user_one.save_user()
+        Credential.credentials_list.append(self.cred_one)
+        user_input = ["twittr", "bethu", "y", "kip"]
+        with patch('builtins.input', side_effect=user_input):
+            self.user_one.create_credential()
+        self.assertEqual(len(Credential.credentials_list), 2) #creating a new credential saves into my list of
+        # credentials
+
 
     def test_save_user(self):
         '''
@@ -92,7 +98,9 @@ class ContactTest(unittest.TestCase):
         :return:
 
         '''
-        pass
+        self.user_one.save_user()
+        User.users.append(self.user_one)
+        self.assertEqual(len(self.user_one.users), 2)
 
     #############################################################################
     ## Test Credentials class                                                  ##
