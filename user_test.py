@@ -64,7 +64,12 @@ class userTest(unittest.TestCase):
         :return:
 
         '''
-        pass
+        user_input = ["twittr", "bethu", "kip"]
+        with patch('builtins.input', side_effect=user_input):
+            self.user_one.add_credential()
+        self.assertEqual(len(Credential.credentials_list), 1)  # creating a new credential saves into my list of
+        # credentials
+        self.assertEqual(Credential.credentials_list[0].name, "twittr" )
 
     def test_create_user(self):
         '''
@@ -73,7 +78,11 @@ class userTest(unittest.TestCase):
         :return:
 
         '''
-        pass
+        user_input = ["bethu", "kip"]
+        with patch('builtins.input', side_effect=user_input):
+            User.create_user()
+        self.assertEqual(len(User.users), 1)  # creating a new user saves into my list of
+        # users
 
     def test_create_credential(self):
         '''
@@ -94,23 +103,47 @@ class userTest(unittest.TestCase):
     def test_save_user(self):
         '''
 
-
+        tests the User method 'save_user'
         :return:
 
         '''
         self.user_one.save_user()
         User.users.append(self.user_one)
         self.assertEqual(len(self.user_one.users), 2)
+    def test_display_creds(self):
+        '''
+        tests the user method 'display_creds'
+        :return:
+        '''
+        Credential.credentials_list.append(self.cred_one)
+        self.assertEqual(self.user_one.display_creds(), Credential.display_credentials())
 
     #############################################################################
     ## Test Credentials class                                                  ##
     #############################################################################
     def test_passworded(self):
+
         '''
 
         :return:
         '''
-        pass
+
+        user_input = ["y", "new"]
+        with patch('builtins.input', side_effect=user_input):
+            passw = self.cred_one.passworded()
+        self.assertEqual(passw, "new")
+
+        # Note: hard to test the randomly generated response because the result is always different
+        # Here's  my attempt at it: confirm that the two generated passwords are not equal
+
+        ran_in = "n"
+        with patch('builtins.input', side_effect=ran_in):
+            passw1 = self.cred_one.passworded()
+        ran_in1 = "n"
+        with patch('builtins.input', side_effect=ran_in1):
+            passw2 = self.cred_one.passworded()
+        self.assertNotEqual(passw1, passw2)
+
     def test_display_credentials(self):
         '''
 
@@ -129,8 +162,7 @@ class userTest(unittest.TestCase):
         '''
         Credential.credentials_list.append(self.cred_one)
         Credential.delete_credential(self.cred_one.name)
-        self.assertEqual(len(Credential.credentials_list), 0)  # should fail
-        # not working as desired
+        self.assertEqual(len(Credential.credentials_list), 0)  # list is now empty
 
     def test_save_credential(self):
 
@@ -145,11 +177,13 @@ class userTest(unittest.TestCase):
         self.assertEqual(len(User.users), 1)
     def test_userInput(self):
         '''
-        tests the userInput classes
+        tests the userInput methods of Credential and User classes
         :return:
         '''
-        # method only incorporates IO dependencies which are not generally tested so no tests here.
-        pass
-
+        # method only incorporates IO dependencies which are not generally tested so only 1 tests here.
+        ran_in = ["y", "password", "n"]
+        with patch('builtins.input', side_effect=ran_in):
+            passw1 = self.cred_one.userInput(ran_in[1])
+        self.assertEqual(passw1, "y")
 if __name__ == '__main__':
     unittest.main()
