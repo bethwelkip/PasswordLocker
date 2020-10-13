@@ -59,8 +59,7 @@ class Credential:
 
         if len(Credential.credentials_list) > 0:
             for cred in Credential.credentials_list:
-                print("/n")
-                print(f"For {cred.name} your username is: {cred.username}  and your password is: {cred.password}")
+                print(f"\n For {cred.name} your username is: {cred.username}  and your password is: {cred.password}")
         else:
             print("You have no credentials yet")
 
