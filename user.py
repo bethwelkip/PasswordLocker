@@ -23,14 +23,14 @@ class User:
             class
         :return:
         '''
-        name = input("provide the username of your account")
+        name = input("provide the username of your account\n")
         if User.users:
             for user in User.users:
                 if user.username == name:
                     attempt = 0
                     while attempt < 3:
                         attempts = 2-attempt
-                        password = input(f"please input the password of your account. You have {attempts} attempts "
+                        password = input(f"please input the password of your account. You have {attempts} attempts \n"
                                          f"left")
                         if user.password == password:
                             print("You are now logged in")
